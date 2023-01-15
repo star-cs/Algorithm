@@ -51,7 +51,7 @@ void init()
 void add_to_head(int x)
 {
     e[idx] = x;
-    ne[x] = head;
+    ne[idx] = head;
     head = idx++;
 }
 
