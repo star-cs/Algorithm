@@ -29,10 +29,31 @@ int ne[N];
 
 int main()
 {
-    // p , s 从下标 1 开始输入
-    cin >> n >> p + 1 >> m >> s + 1;
+    // // p , s 从下标 1 开始输入
+    // cin >> n >> p + 1 >> m >> s + 1;
 
-    //求ne[]，ne[1] = 0 ， 所以 i 从 2 开始，j从0开始
+    // //求ne[]，ne[1] = 0 ， 所以 i 从 2 开始，j从0开始
+    // for(int i = 2 , j = 0 ; i <= n ; i++)
+    // {
+    //     while(j && p[i] != p[j+1])  j = ne[j];
+    //     if(p[i] == p[j+1]) j++;
+    //     ne[i] = j;  
+    // }
+
+
+    // //kmp匹配过程
+    // for(int i = 1 , j = 0 ; i <= m ; i++)
+    // {
+    //     while( j && s[i] != p[j+1])  j = ne[j];
+    //     if(s[i] == p[j+1])  j++;
+    //     if(j == n)
+    //     {
+    //         //匹配成功
+    //         printf("%d " , i - n);
+    //         j = ne[j];
+    //     }
+    // }
+
     for(int i = 2 , j = 0 ; i <= n ; i++)
     {
         while(j && p[i] != p[j+1])  j = ne[j];
@@ -40,17 +61,8 @@ int main()
         ne[i] = j;  
     }
 
-    //kmp匹配过程
-    for(int i = 1 , j = 0 ; i <= m ; i++)
-    {
-        while( j && s[i] != p[j+1])  j = ne[j];
-        if(s[i] == p[j+1])  j++;
-        if(j == n)
-        {
-            //匹配成功
-            printf("%d " , i - n);
-            j = ne[j];
-        }
-    }
+    for(int i = 0 ; i <= ne ; i++)
+        cout << ne << endl;
+
     return 0;
 }
