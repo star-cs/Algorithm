@@ -18,6 +18,7 @@ bool check(int a , int c)
 {
     int b =  c * ( n - a );
     if(!b) return false;
+    //拷贝st到backup
     memcpy(backup , st , sizeof st);
     while(b)
     {
