@@ -29,7 +29,7 @@
 using namespace std;
 const int N = 100010;
 int n , m;
-int p[N];
+int p[N]; 
 int find(int x)
 {
     if(p[x] != x)   p[x] = find(p[x]);

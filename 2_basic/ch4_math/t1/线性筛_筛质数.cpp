@@ -10,7 +10,7 @@ void get_primes(int n)
     {
         if(!st[i])  primes[cnt++] = i;
 
-        for(int j = 0 ; primes[j] <= n / i ; j++)
+        for(int j = 0 ; i*primes[j] <= n ; j++)
         {
             st[primes[j] * i] = true;
             if(i % primes[j] == 0)  break;
