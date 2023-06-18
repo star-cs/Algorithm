@@ -6,18 +6,20 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-void _sort(int arr[] , int l , int r)
+void _sort(int arr[] , int left , int right)
 {
-    if(l >= r)   return;
-    int x = arr[l] , i = l-1 , j = r+1;
+    if(left >= right)
+        return;
+    int x = arr[left] , i = left - 1 , j = right + 1;
     while(i < j)
     {
-        while(arr[++i] < x) {}
-        while(arr[--j] > x) {}
-        if(i < j) swap(arr[i] , arr[j]);
+        while(arr[++i] < x);
+        while(arr[--j] > x);
+        if(i < j)
+            swap(arr[i] , arr[j]);
     }
-    _sort(arr , l , j);
-    _sort(arr , j+1 , r);
+    _sort(arr , left , i);
+    _sort(arr , i+1 , right);
 }
 
 int fun(int arr[] , int len)
