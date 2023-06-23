@@ -7,6 +7,7 @@ typedef struct node
     int data;
     struct node*next;
 }NODE;
+
 // //暴力，空间复杂度O(n)，不符合条件
 // NODE find_NODE_by_idx(NODE head , int idx)
 // {
