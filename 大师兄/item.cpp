@@ -23,3 +23,23 @@ void del_x(LinkList &L , ElemType x)
         }
     }
 }
+
+//Day02
+//将两个有序顺序表合并为一个新的有序顺序表,并由函数返回结果顺序表
+void Merge(SqlList A , SqlList B , SqlList &C)
+{
+    if(A.length + B.length > C.length)  
+        return false;
+    int i = 0 , j = 0 , z = 0;
+    while(i < A.length && j < B.length)
+    {
+        if(A.data[i] <= B.data[j])
+            C.data[z++] = A.data[i++];
+        else
+            C.data[z++] = B.data[j++];
+    }
+    while(i < A.length) C.data[z++] = A.data[i++];
+    while(j < B.length) C.data[z++] = B.data[j++];
+    C.length = z + 1;
+    return true;
+}
