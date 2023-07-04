@@ -71,3 +71,22 @@ void R2(SqlList &A, int left , int right)
         R2(A , left+1 , right-1);
     }
 }
+
+//Day04
+//对长度为n的顺序表L,编写一个时间复杂度为O(n),空间复杂度为O(1)的算法,
+//该算法删除线性表中所有值为x的数据元素
+//双指针
+void Del_x(SqlList &L , ElemType x)
+{
+    int i = 0 , k = 0;  //k下标左边均无x的值
+    while(i < L.length)
+    {
+        if(L.data[i] == x)  i++;    //等于x，i下标右移
+        else    //不等于x，将i指针的值复制到k下标
+        {
+            L.data[k] = L.data[i];
+            k++; i++;
+        }
+    }
+    L.length = k;
+}
