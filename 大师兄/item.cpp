@@ -75,7 +75,10 @@ void R2(SqlList &A, int left , int right)
 //Day04
 //对长度为n的顺序表L,编写一个时间复杂度为O(n),空间复杂度为O(1)的算法,
 //该算法删除线性表中所有值为x的数据元素
+
 //双指针
+//如果 k != i，那么k指向的一定是x
+//知道i找到下一个非x的数值，可以直接替换k下标的数值
 void Del_x(SqlList &L , ElemType x)
 {
     int i = 0 , k = 0;  //k下标左边均无x的值
@@ -89,4 +92,39 @@ void Del_x(SqlList &L , ElemType x)
         }
     }
     L.length = k;
+}
+
+//精简版本
+void Del_x(SqlList &L , ElemType x)
+{
+    int i = 0 , k = 0;  //k下标指向，新顺序表的最右端节点+1的位置。
+    while(i++ < L.length)
+    {
+        if(L.data[i] != x)
+            L.data[k++] = L.data[i];
+        }
+    }
+    L.length = k;
+}
+
+
+//Day05
+//从顺序表中删除其值在给定值s与t之间(包含s和t,要求s < t）的所有元素
+//如果s或t不合理或顺序表为空,则显示出错信息并退出运行
+bool Del_form_s_to_t(SqlList &L , ElemType s , ElemType t)
+{
+    if(s >= t || L.length == 0)  
+    {
+        return fasle;
+    }
+    int i = 0 , k = -1;     //k指向新顺序表的最右端节点
+    while(i++ < L.length)
+    {
+        if( !(L.data[i] >= s && L.data[i] <= t) )  
+        {   
+            L.data[++k] = L.data[i];        //k下标先右移，再赋值。
+        }
+    }
+    L.length = k+1;         //这里是和上一题k值设置的区别
+    return true;
 }
