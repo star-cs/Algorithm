@@ -28,7 +28,7 @@ void Del_x(LinkList &L , ElemType x)
 
 //Day02
 //将两个有序顺序表合并为一个新的有序顺序表,并由函数返回结果顺序表
-void Merge(SqlList A , SqlList B , SqlList &C)
+void Merge(SqList A , SqList B , SqList &C)
 {
     if(A.length + B.length > C.length)  
         return false;
@@ -51,7 +51,7 @@ void Merge(SqlList A , SqlList B , SqlList &C)
 //设计一个高效算法,将顺序表L的所有元素逆置,要求算法的空间复杂度为O(1)
 // 1 2 3 4 5 6
 // 5 4 3 2 1
-void Reverse(SqlList &A)
+void Reverse(SqList &A)
 {
     int i = 0 ,  j = A.length - 1; 
     while(i < j)
@@ -63,7 +63,7 @@ void Reverse(SqlList &A)
     }
 }
 //递归法
-void R2(SqlList &A, int left , int right)
+void R2(SqList &A, int left , int right)
 {
     if(left < right)
     {
@@ -79,7 +79,7 @@ void R2(SqlList &A, int left , int right)
 //双指针
 //如果 k != i，那么k指向的一定是x
 //知道i找到下一个非x的数值，可以直接替换k下标的数值
-void Del_x(SqlList &L , ElemType x)
+void Del_x(SqList &L , ElemType x)
 {
     int i = 0 , k = 0;  //k下标左边均无x的值
     while(i < L.length)
@@ -95,7 +95,7 @@ void Del_x(SqlList &L , ElemType x)
 }
 
 //精简版本
-void Del_x(SqlList &L , ElemType x)
+void Del_x(SqList &L , ElemType x)
 {
     int i = 0 , k = 0;  //k下标指向，新顺序表的最右端节点+1的位置。
     while(i++ < L.length)
@@ -111,7 +111,7 @@ void Del_x(SqlList &L , ElemType x)
 //Day05
 //从顺序表中删除其值在给定值s与t之间(包含s和t,要求s < t）的所有元素
 //如果s或t不合理或顺序表为空,则显示出错信息并退出运行
-bool Del_form_s_to_t(SqlList &L , ElemType s , ElemType t)
+bool Del_form_s_to_t(SqList &L , ElemType s , ElemType t)
 {
     if(s >= t || L.length == 0)  
     {
