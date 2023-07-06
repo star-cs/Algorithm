@@ -128,3 +128,36 @@ bool Del_form_s_to_t(SqList &L , ElemType s , ElemType t)
     L.length = k+1;         //这里是和上一题k值设置的区别
     return true;
 }
+
+//Day06
+//从有序顺序表中删除所有其值重复的元素,使表中所有元素的值均不同
+void Del_same1(SqList &L)
+{
+    // int arr[L.length];
+    // memset(arr , 0 , sizeof arr);
+    // int i = 0 , k = -1;
+    // while(i++ < L.length)
+    // {
+    //     if(arr[L.data[i]] == 0) 
+    //     {
+    //         L.data[++k] = L.data[i];
+    //         arr[L.data[i]]++;
+    //     }
+    //     else
+    //     {
+    //         i++;
+    //     }
+    // }
+    // L.length = k+1;
+
+    //有序顺序表
+    int i = 1 , k = 0;  //顺序表第一个数默认保存，i从第二个开始判断
+    while(i++ < L.length)
+    {
+        if(L.data[k] != L.data[i])
+        { 
+            L.data[++k] = L.data[i];
+        }
+    }
+    L.length = k+1;
+}
