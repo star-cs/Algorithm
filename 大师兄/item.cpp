@@ -102,7 +102,6 @@ void Del_x(SqList &L , ElemType x)
     {
         if(L.data[i] != x)
             L.data[k++] = L.data[i];
-        }
     }
     L.length = k;
 }
@@ -161,3 +160,5 @@ void Del_same1(SqList &L)
     }
     L.length = k+1;
 }
+
+
