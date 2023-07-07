@@ -162,3 +162,29 @@ void Del_same1(SqList &L)
 }
 
 
+//Day07
+//已知在一维数组A[m+n]中依次存放两个顺序表(a1,a2,a3 ...,am)和(b1,b2,b3 ...,bn)。
+//试编写一个函数,将数组中两个顺序表的位置互换,即将(b1,b2,b3 ...bn)放在(a1, a2,a3 ...,am)的前面
+
+//整体翻转，再内部翻转
+//反过来同理，反过来写，边界更加好判断一点
+void Reserve_a_b(SqList &A , int m , int n) //前m个，后n个
+{
+    //a [0,m-1]
+    //b [m,m+n-1]
+    //转换后，前n个，后m个
+    reserve(A , 0 , m+n-1);
+    reserve(A , 0 , n-1);
+    reserve(A , n , m+n-1);
+}
+void reserve(SqList &A , int l , int r)
+{
+    int i = l , j = r;
+    while(i < j)
+    {
+        int t = A.data[r];
+        A.data[r] = A.data[l];
+        A.data[l] = t;
+        i++ , j--;
+    }
+}
