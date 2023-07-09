@@ -188,3 +188,32 @@ void reserve(SqList &A , int l , int r)
         i++ , j--;
     }
 }
+
+
+//Day08
+//2010统考真题
+//
+
+
+//Day09
+//试编写带头结点的的单链表L中删除一个最小值结点的高效算法(假设最小值结点是唯一的)
+LinkList Del_min_node(LinkList &L)
+{
+    LNode *cnt = L->next;
+    LNode *pre_min_node = L->next;  //记录最小节点的前一个节点
+    int min = cnt->data;            //最小数值
+    while(cnt != NULL)
+    {
+        LNode *cnt_next = cnt->next;    
+        if(cnt_next->data < min)    //cnt下一个节点是最小节点时
+        {
+            pre_min_node = cnt;
+            min = cnt_next->data;   
+        }
+        cnt = cnt->next;
+    }
+    LNode *min_node = pre_min_node->next;
+    pre_min_node->next = pre_min_node->next->next;  //删除最小值
+    free(min_node);
+    return L;
+}
