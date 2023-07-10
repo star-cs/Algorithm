@@ -217,3 +217,25 @@ LinkList Del_min_node(LinkList &L)
     free(min_node);
     return L;
 }
+
+//Day10
+//使用头插法建立单链表
+LinkList init_head(LinkList &L)
+{
+    LNode *temp;
+    L = new LNode();
+    L->next = NULL;
+    int x;
+    cin >> x;
+    while(x != -1)
+    {
+        temp = new LNode();
+        temp->data = x;
+
+        temp->next = L->next;
+        L->next = temp;
+
+        cin >> x;
+    }
+    return L;
+}
