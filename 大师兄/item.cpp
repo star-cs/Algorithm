@@ -239,3 +239,24 @@ LinkList init_head(LinkList &L)
     }
     return L;
 }
+
+//Day11
+//使用尾插法建立单链表
+LinkList init_end(LinkList &L)
+{
+    L = new LNode();
+    L->next = NULL;
+    LNode *cur = L->next;
+    int x;
+    cin >> x;
+    while(x != -1)
+    {
+        LNode *tem = new LNode();
+        tem->data = x;
+        tem->next = NULL;
+        cur->next = tem;
+
+        cur = tem;
+    }
+    return L;
+}
