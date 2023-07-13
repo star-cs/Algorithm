@@ -260,3 +260,24 @@ LinkList init_end(LinkList &L)
     }
     return L;
 }
+
+//Day12
+//试编写算法将带头结点的单链表就地逆置，
+//所谓的“就地”是指辅助空间的复杂度为O (1)
+// 1-2-3-4-5
+//     3 4-5 
+
+LinkList reserve(LinkList &L){
+    LNode *p1 = L->next;
+    LNode *p2 = p1->next;
+    while(p2->next != NULL)    
+    {
+        LNode *p3 = p2->next;
+        p2->next = p1;
+        p1 = p2;
+        p2 = p3;
+    }
+    p2->next = p1;  //最后p2到了最后一个节点
+    L->next->next = NULL;
+    return p1;
+}
