@@ -278,6 +278,7 @@ LinkList reserve(LinkList &L){
         p2 = p3;
     }
     p2->next = p1;  //最后p2到了最后一个节点
-    L->next->next = NULL;
-    return p1;
+    L->next->next = NULL;    //将之后的尾节点->next = NULL;
+    L->next = p1;   //L头节点重新换位子
+    return L;
 }
