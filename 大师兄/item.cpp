@@ -282,3 +282,59 @@ LinkList reserve(LinkList &L){
     L->next = p1;   //L头节点重新换位子
     return L;
 }
+
+
+//Day13
+//设在一个带表头结点的单链表中所有元素的结点的数据值无序，试编写一个函数，
+//删除表中所有介于给定的的两个值(作为函数的参数给出）之间的元素的元素(若存在)。
+void del(LinkList &L , int min , int max)
+{
+    LNode *p = L->next;
+    while(p->next != NULL)
+    {
+        LNode *p1 = p->next;
+        if(p1->data >= min && p1->data <= max)
+        {
+            p->next = p1->next;
+            free(p1);
+        }
+        else
+        {
+            p = p1;
+        }
+    }
+}
+
+//Day14(上)
+//给定两个单链表，编写算法找出两个单链表的公共结点
+LNode same_node(LinkList &L1 , LinkList &L2)
+{
+    int L1_len = 0;
+    int L2_len = 0;
+    LNode *t1 = L1->next;
+    LNode *t2 = L2->next;
+    while(t1 != NULL)   
+    {
+        L1_len++;
+        t1 = t1->next;
+    }
+    while(t2 != NULL)
+    {
+        L2_len++;
+        t2 = t2->next;
+    }
+    t1 = L1->next;
+    t2 = L2->next;
+    while(L1_len++ < L2_len) t2 = t2->next;     //L2长，那么t2得提前移动 L2_len-L1_len
+    while(L1_len > L2_len++) t1 = t1->next;     //L1长，那么t1得提前移动
+    //保证 t1 t2 从距离末端 相同的位置出发。
+    while(t1 != t2)
+    {
+        t1 = t1->next;
+        t2 = t2->next;
+    }
+    return t1;
+}
+
+//时间复杂度 O(len1 + len2);
+    
