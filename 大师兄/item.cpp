@@ -323,7 +323,7 @@ LNode same_node(LinkList &L1 , LinkList &L2)
         L2_len++;
         t2 = t2->next;
     }
-    t1 = L1->next;
+    t1 = L1->next;  //t1 t1重置
     t2 = L2->next;
     while(L1_len++ < L2_len) t2 = t2->next;     //L2长，那么t2得提前移动 L2_len-L1_len
     while(L1_len > L2_len++) t1 = t1->next;     //L1长，那么t1得提前移动
@@ -338,3 +338,35 @@ LNode same_node(LinkList &L1 , LinkList &L2)
 
 //时间复杂度 O(len1 + len2);
     
+//Day15
+//将一个带头结点的单链表A分解为两个带头结点的单链表A和B，
+//使得A表中含有原表中序号为奇数的元素，
+//而B表中含有原表中序号为偶数的元素，且保持其相对顺序不变。
+LinkList Divide(LinkList &A)
+{
+    LNode *p = A->next;
+    LNode *p1 = A;
+    //LinkList B = new LinkList();
+    LinkList B = (LinkList)malloc(sizeof(LNode));
+    B->next = NULL;
+    LNode *p2 = B;
+    int i = 0;
+    while(p != NULL)
+    {
+        i++;
+        if(i % 2 != 0)  //奇数节点
+        {
+            p1->next = p;
+            p1 = p;
+        }
+        else
+        {
+            p2->next = p;
+            p2 = p;
+        }
+        p = p->next;
+    }
+    p1->next = NULL;
+    p2->next = NULL;
+    return B;
+}
