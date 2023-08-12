@@ -370,3 +370,5 @@ LinkList Divide(LinkList &A)
     p2->next = NULL;
     return B;
 }
+
+
