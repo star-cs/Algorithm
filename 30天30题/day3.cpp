@@ -1,8 +1,6 @@
 #include<bits/stdc++.h>
 
-
-
-int qsort(int A , int l , int r)
+int Qsort(int A , int l , int r)
 {
     if(l >= r)  return l;
     int i = l-1 , j = r+1 , x = A[l + r >>1];
@@ -12,34 +10,35 @@ int qsort(int A , int l , int r)
         while(A[--j] > x);
         if(i < j) swap(A[i] , A[j]);
     }
-    qsort(A , l , j);
-    qsort(A , j+1 , r);
+    Qsort(A , l , j);
+    Qsort(A , j+1 , r);
 }
 
-int bsearch_l(int A[] , int l , int r , int k)
+int bsearch_l(int A[] , int n , int k)
 {
-    while(l < r)
+    int l = 0 , r = n-1;
+    while(l <= r)
     {
-        int x = A[l + r >> 1];
-        if(x < k)   r = mid;
-        else l = mid+1;
+        int mid = l + r >> 1;
+        if(A[mid] < k)  l = mid + 1;
+        else r = mid;
     }
     return l;
 }
 
-int function(int A[] , int B[] , int C[] , int n)
+int Function(int A[] , int B[] , int C[] , int n)
 {
     int ans = 0;
-    qsort(A , 0 , n-1);
-    qsort(B , 0 , n-1);
-    qsort(C , 0 , n-1);
+    Qsort(A , 0 , n-1);
+    Qsort(B , 0 , n-1);
+    Qsort(C , 0 , n-1);
     int i = 0 , z = 0;
     for(int j = 0 ; j < n ; j++)
     {
-        i = bsearch_l(A , i , n-1 , B[j]);//查找小于B[j]的右边界
-        z = bsearch_l(C , z , n-1 , B[j]+1);//查找小于B[j]+1的右边界，z右侧的数大于B[j]
+        i = bsearch_l(A , B[j]);    //小于B[j]的边界
+        z = bsearch_l(C , B[j]+1);  //小于B[j]+1的边界
         //每次折半查找可以利用上次的边界缩小范围
-        ans += (i+1) * (n-z+1);
+        ans += (i+1) * (n-z-1);
     }
     return ans;
 }
