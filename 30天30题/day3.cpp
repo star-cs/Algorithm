@@ -13,17 +13,25 @@ int Qsort(int A , int l , int r)
     Qsort(A , l , j);
     Qsort(A , j+1 , r);
 }
+/*
+方便划分边界的二分查找法
 
-int bsearch_l(int A[] , int n , int k)
+1. 建模：划分蓝红区域，确定 IsBlue（）
+2. 确定返回 L 还是 R
+3. 套用算法模板
+4. (后处理……)，包含只有蓝色区域/红色区域的返回值处理问题等
+*/
+int Bsearch(int A[] , int n , int k)
 {
-    int l = 0 , r = n-1;
-    while(l <= r)
+    int l = -1 , r = n; 
+    // 左右指针分别指向，满足条件的左右边界，不断往中间移动。
+    while(l + 1 != r)
     {
-        int mid = l + r >> 1;
-        if(A[mid] < k)  l = mid + 1;
-        else r = mid;
+        int m = A[l + r >> 1];
+        if(m < k) l = m;
+        else r = m; 
     }
-    return l;
+    return r;   //满足条件的右边一位，方便计算ans
 }
 
 int Function(int A[] , int B[] , int C[] , int n)
@@ -35,10 +43,9 @@ int Function(int A[] , int B[] , int C[] , int n)
     int i = 0 , z = 0;
     for(int j = 0 ; j < n ; j++)
     {
-        i = bsearch_l(A , B[j]);    //小于B[j]的边界
-        z = bsearch_l(C , B[j]+1);  //小于B[j]+1的边界
-        //每次折半查找可以利用上次的边界缩小范围
-        ans += (i+1) * (n-z-1);
+        i = bsearch_l(A , n , B[j]);    // i为，小于B[j]，右边一个点
+        z = bsearch_l(C , n , B[j]+1);  // z为，小于B[j]+1，即大于B[j]，右边一个点。
+        ans += i * (n-z);
     }
     return ans;
 }
