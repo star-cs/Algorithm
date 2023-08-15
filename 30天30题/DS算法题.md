@@ -1,6 +1,7 @@
 # 30天30题（进阶）
-## 模板
+## 必背模板
 ##### 快排
+
 ```c++
 void qsort(int A[] , int l , int r)
 {
@@ -17,14 +18,14 @@ void qsort(int A[] , int l , int r)
 ```
 
 ##### 二分查找
-非常棒的模板！
 
-视频讲解 https://www.bilibili.com/video/BV1d54y1q7k7/
-
-1. 建模：划分蓝红区域，确定 IsBlue()
-2. 确定返回 L 还是 R
-3. 套用算法模板
-4. (后处理……)，包含只有蓝色区域/红色区域的返回值处理问题等
+> 非常棒的模板！  
+> 视频讲解 https://www.bilibili.com/video/BV1d54y1q7k7/  
+> 
+> 1. 建模：划分蓝红区域，确定 IsBlue()
+> 2. 确定返回 L 还是 R
+> 3. 套用算法模板
+> 4. (后处理……)，包含只有蓝色区域/红色区域的返回值处理问题等
 
 ```c++
 //伪代码
@@ -46,10 +47,12 @@ int bsearch(int A[] , int n , int k)
     }
 }
 ```
-## Day1
-<img src="./image/1.jpg">
 
-思路：
+## Day1
+<img src="./image/1.jpg"> 
+
+
+> 思路：...
 
 ```c++
 void qsort(int A[] , int l , int r)
@@ -86,11 +89,14 @@ void function(int A[] , int B[] , int n)
 <img src="./image/2.jpg">  
    
 
-思路：（这个思想很常用，务必熟稔于心）
-1. 构造一个足够大的数组B[]（长度为2n），用于存储A[]数组每个数值的出现次数。（相当于排序+压缩）
-2. 每次将 跨度k大小的两个数组 对应的B[]出现次数相乘。得到这次的二元组个数
-3. 若 k = 0，那么每个数与其本身为一次二元组。
+> 思路：（这个思想很常用，务必熟稔于心）
+> 1. 构造一个足够大的数组B[]（长度为2n），用于存储A[]数组每个数值的出现次数。（相当于排序+压缩）
+> 2. 每次将 跨度k大小的两个数组 对应的B[]出现次数相乘。得到这次的二元组个数
+> 3. 若 k = 0，那么每个数与其本身为一次二元组。
 若 k != 0，那么每个二元组交换位置又是一个新二元组，res*2
+
+> 空间复杂度O(n)  
+> 时间复杂度O(n)
 
 ```c++
 int function(int A[] , int n, int k)
@@ -111,8 +117,7 @@ int function(int A[] , int n, int k)
     else return res * 2;
 }  
 ```
-空间复杂度O(n)  
-时间复杂度O(n)
+
 
 > 思考：  
 > 如果题目改成 |A[i] - A[j]| <= k ，最后怎么处理得到二元组？
@@ -124,7 +129,7 @@ int function(int A[] , int n, int k)
 
 <img src="./image/3.jpg">
 
-思路： 
+> 思路：... 
 
 ```c++
 int Qsort(int A , int l , int r)
@@ -171,66 +176,70 @@ int Function(int A[] , int B[] , int C[] , int n)
     return ans;
 }
 ```
+
 ## Day 4
 
 <img src="./image/4.jpg">
 
-思路:  
-1. 创建一个足够大的数组D[N]，记录每个数组的出现情况
-2. 
+> 思路:  ...
+>
+> 
 
 ```c++
-
-//偷懒  O(n) O(n)
-int function(int A[] , int B[] , int C[] , int n)
-{
-    int D[0x3f3f3f];
-    memset(D , 0 , sizeof(D));
-
-    int ans = 0;
-    for(int i = 0 ; i < n ; i++)
-    {
-        if(D[ A[i] ] == 0)  D[ A[i] ]++;
-    }
-    for(int i = 0 ; i < n ; i++)
-    {
-        if(D[ B[i] ] == 1)  D[ B[i] ]++;
-    }
-    for(int i = 0 ; i < n ; i++)
-    {
-        if(D[ C[i] ] == 2)  //该数值前两个数组出现过
-        {
-            D[ C[i] ]++;
-            ans++;
-        }
-    }
-    return ans;
-}
-
 //优化  O(n) O(1)
-void to_next(int A[] , int n , int &z)
+int to_next(int A[] , int &i)   //引用i，需要修改i值
 {
-    do ++z; while(z < n && A[z] == A[z-1]);
+    while(A[i] == A[i-1]) i++;  //当前数值不等于前一个数值，说明当前是新数值。
 }
-
 int function(int A[] , int B[] , int C[] , int n)
 {
     int i = 0 , j = 0 , z = 0;
     int ans = 0;
     while(i < j && j < z && z < n)
     {
-        if(A[i] == B[j]  && B[j] == C[z])
+        if(A[i] == B[j] && B[j] == C[z])
         {
             ans++;
-            to_next(A,n,i);
-            to_next(B,n,j);
-            to_next(C,n,z);
-        }else if(A[i] < B[j] && A[i] < C[z])    //A[i]最小，i右移。其余同理
-            to_next(A,n,i);
-        else if(B[j] < A[i] && B[j] < C[z])     
-            to_next(B,n,j);
-        else    
-            to_next(C,n,z);
+            to_next(A[i] , i);
+            to_next(B[j] , j);
+            to_next(C[z] , z);
+        }
+        else
+        {
+            int Min = min(A[i] , B[j] , C[z]);  //三个数值中 最小值 移动
+
+            if(A[i] == min) to_next(A[i] , i);
+            if(B[j] == min) to_next(B[j] , j);
+            if(C[z] == min) to_next(C[z] , z);
+        }
     }
+}
+```
+
+## Day 5
+
+<img src="./image/5.jpg">
+
+> 思想：滑动窗口
+
+```c++
+int function(int A[] , int n , int k)
+{
+    int i = 0 , j = 0 , sum = A[0] , ans = 0;
+    while(i <= j && j < n)
+    {
+        if(sum < k) 
+        {
+            j++;
+            sum += A[j];
+        }
+        else
+        {
+            ans = min(ans , j-i+1);
+            sum -= A[i];
+            i--;
+        }
+    }
+    return ans;
 }
 ```
