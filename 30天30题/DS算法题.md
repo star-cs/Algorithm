@@ -243,3 +243,150 @@ int function(int A[] , int n , int k)
     return ans;
 }
 ```
+
+
+## Day6
+
+<image src="./image/6.jpg">
+
+> 思想：
+> 1. 对X[]从大到小遍历，每次记录当前列的最大temY。只要temY大于之前的Y上限，那么就是一个极大值，并且更新Y上限。
+
+时间 O(nlogn)
+空间 O(logn)
+
+```c++
+void qsort(int X[] , int Y[] , int l , int r)
+{
+    int i = l-1 , j = r+1 , mid = l+r>>1;
+    while(i < j)
+    {
+        while(X[++i] < X[mid])
+        while(X[--j] > X[mid])
+        if(i < j)   
+        {
+            swap(X[i] , X[j]);
+            swap(Y[i] , Y[j]);
+        }
+    }
+    qsort(X , Y , l , i);
+    qsort(X , Y , i+1 , r);
+}
+
+int function(int X[] , int Y[] , int n)
+{
+    int ans = 0;
+    qsort(X , Y , 0 , n-1);
+    //从大到小遍历X[]
+    int i = n-1 ;
+    int Y = 0; // Y上限
+    while(i >= 0)
+    {
+        int temX = X[i];
+        int temY = 0;   //当前列的最大值temY
+        while(X[i] == temX)
+        {
+            temY = max(temY , Y[i]);
+            i--;
+        }
+        if(temY > Y)  
+        {
+            Y = temY;
+            ans++;
+        }
+    }
+    return ans;
+}
+```
+
+## Day7
+<image src="./image/7.jpg">
+
+> 思想：  
+> 前缀和  
+> 连续子数组元素和的最大值，那么就是 当前前缀和-最小前缀和  
+> 假设 最小前缀和在x点取到（sum[0,x]是最小的）。  
+> 即，当前 [0,i]之间sum - [0,x]之前sum == [x,i]之前的sum
+
+```c++
+int function(int A[] , int n)
+{
+    //cnt 当前前缀和，m 最小前缀和
+    int cnt = 0 , m = 0;
+    int ans = -INF;
+    for(int i = 0 ; i < n ; i++)
+    {
+        cnt += A[i];
+        ans = max(cnt - m , ans);
+        m = min(cnt , m);
+    }
+    return ans;
+}
+```
+## Day8
+<image src="./image/8.jpg">
+
+>思路：  
+> 
+
+```c++
+void qsort(int A[] , int l , int r)
+{
+    int i = l-1 , j = r+1 , x = mid[l + r >> 1];
+    while(i <= j)
+    {
+        while(A[++i] < x);
+        while(A[--j] > x);
+        if(i < j)   swap(A[i] , A[j]);
+    }
+    qsort(A , l , j);
+    qsort(a , j+1, r);
+}
+int function(int A[] , int n , int k)
+{
+    qsort(A , 0 , n-1);
+    int i = 0 , j = n-1;
+    while(i <= j)
+    {
+        if(A[i] + A[j] > k) j--;  //两端相加大于k，只能减少右端
+        else if(A[i] + A[j] < k) i++; //两端相加小于k，只能增加左端
+        else(A[i]+A[j] == k) //两端相加等于k，之后的二元组只会在区间内部取到
+        {
+            if(i == j) 
+            {
+                ans ++;
+                break;  //i==j，直接break，跳过下面的(i,i)(j,j)判断。
+            }
+            else ans += 2;
+            i++; j--;
+        }
+        if(A[i] * 2 == k) ans++;    
+        //当 (i,i) 也满足时，得另外判断。因为，i，j两个指针不会在当前位置会合。
+        if(A[j] * 2 == k) ans++;
+    }
+    return ans;
+}
+```
+
+
+## Day9
+<image src="./image/9.jpg">
+
+> 分析：（非常棒的思想！！！）
+> 1. 每计算一个前缀和，对其进行取余k，余数相同的可以作为满足题意的首尾。
+
+```c++
+int function(int A[] , int n , int k)
+{
+    int hash[k];
+    int sum = 0;
+    int ans = 0;
+    for(int i = 0 ; i < n ; i++)
+    {
+        sum += A[i];
+        ans += hash[ sum % k];
+        hash[ sum % k]++;
+    }
+    return ans;
+}
+```
