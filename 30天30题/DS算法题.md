@@ -390,3 +390,73 @@ int function(int A[] , int n , int k)
     return ans;
 }
 ```
+
+
+## Day10
+
+<image src="./image/10.png">
+
+
+```c++
+int function(int A[] , int n)
+{
+    for(int i = 1 ; i < n ; i++) A[i] += A[i-1];    //前缀和
+
+    int j = 0 , k = 0;  //k指向的是刚好不满足S2 <= S3的位置
+    int ans = 0;
+    for(int i = 0 ; i < n ; i++)
+    {
+        int s1 = A[i];
+        // 两个分割点必须保持前后顺序
+        j = max(i+1 , j);
+        //  s1 <= s2 <= s3  找s2的左右边界
+        while(j < n && (A[j] - A[i]) < s1) j++;
+        while(k < n && (A[k] - A[i]) <= (A[n-1] - A[k])) k++;
+        ans += k - j;
+    }
+    return ans;
+}
+```
+
+
+## Day11
+
+<image src="./image/11.jpg">
+
+> 思想：  
+> 滑动窗口
+>
+> 时间O(n)  
+> 空间O(n)
+
+```c++
+int function(int A[] , int n)
+{
+    int hash[n];
+    malloc(hash , 0 , sizeof(hash));
+
+    int i = 0 , j = 0 ;
+    int ans = 0;
+    while(i <= j && j < n)
+    {
+        while(hash[ A[j] ] == 0) 
+        {
+            hash[A[j]] = 1;
+            j++;
+        }
+        //当前j指向 第二个重复元素
+        ans = max(ans , j-i);
+
+        while(i <= j && A[i] != A[j])
+        {
+            hash[A[i]] = 0;
+            i++;
+        }
+        //当前i指向 第一个重复元素
+        i++ ; j++ ;
+        //i,j 移动，重复元素不用修改。
+    }
+    return ans;
+}
+
+```
