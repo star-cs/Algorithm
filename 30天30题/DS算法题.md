@@ -460,3 +460,51 @@ int function(int A[] , int n)
 }
 
 ```
+
+
+## Day12
+
+<image src="./image/12.jpg" >
+
+> 思路：  
+> 滑动窗口记录，窗口内 在 范围内 的元素的个数
+> num 记录窗口内 在范围内 的元素的种类
+
+```c++
+int function(int A[] , int n , int k)
+{
+    int hash[k];
+    malloc(hash , 0 , sizeof(hash));
+    int i = 0 , j = 0;
+    int num = 0;
+    int ans = 0;
+    while(i <= j && j < n)
+    {
+        if(num < k)
+        {
+            int t = A[j];
+            j++;        //j指向下一个将进入窗口的元素
+            if(t >= k) continue;
+            else
+            {
+                if(hash[t] == 0) num++; //进入窗口的元素种类+1
+                hash[t]++;
+            }
+        }
+        else
+        {
+            ans = min(ans , j - i);
+            int t = A[i];
+            i++;
+            if(t >= k) continue;
+            else
+            {
+                hash[t]--;              //不会减到负数
+                if(hash[t] == 0) num--;
+            }
+        }
+    }
+    return ans;
+}
+
+```
