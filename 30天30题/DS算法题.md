@@ -508,3 +508,246 @@ int function(int A[] , int n , int k)
 }
 
 ```
+
+## Day13
+
+<image src="./image/13.jpg">
+
+
+> 思想：  
+> 1. 依次比较两个指针
+
+```c++
+typedef struct LNode
+{
+    int data;
+    struct LNode * next;
+} LNode , *LinkList;
+
+LinkList function(LinkList &ha , LinkList &hb)
+{
+    LNode * p1 = ha -> next;
+    LNode * p2 = hb -> next;
+
+    ha = NULL;
+    LNode * t = ha;
+
+    while(p1 != NULL && p2 != NULL)
+    {
+        if(p1->data <= p2->data)    
+        {
+            t->next = p1;
+            t = t->next;
+            p1 = p1->next;
+        }
+        else
+        {
+            t->next = p2;
+            t = t->next;
+            p2 = p2->next;
+        }
+    }
+
+    return ha;
+}
+```
+
+## Day14
+
+<image src="./image/14.jpg">
+
+> 思路：  
+> 将hb
+
+```c++
+struct typedef LNode
+{
+    int data;
+    struct LNode * next;
+}LNode , *LinkList;
+
+void reserve(LinkList &L)
+{
+    LNode cnt = L->next , pre = L;
+    while(cnt->next != NULL)
+    {
+        LNode t = cnt->next;
+        cnt->next = pre;
+        pre = cnt; 
+        cnt = t;
+    }
+    L->next = cnt;
+}
+
+LinkList function(LinkList &ha , LinkList &hb)
+{
+    reserve(hb);
+
+    LNode p1 = ha->next , p2 = hb->next;
+
+    ha->next = NULL;
+
+    LNode t = ha;
+
+    while(p1 != NULL && p2 != NULL)
+    {
+        if(p1->data <= p2->data)
+        {
+            t->next = p1;
+            p1 = p1->next;
+        }
+        else
+        {
+            t->next = p2;
+            p2 = p2->next;
+        }
+    }
+    if(p1 != NULL)   t->next = p1;
+    if(p2 != NULL)   t->next = p2;
+    
+    return ha;
+}
+```
+
+## Day 15
+
+<image src="./image/15.jpg">
+
+> 思想：  
+> 1. 对链表的右半边就行转置  
+> 2. 从链表的左右两边向中间移动，并记录节点数值之和  
+>   
+
+```c++
+typedef struct Node
+{
+    int data;
+    struct Node * next;
+}Node , *LinkList;
+
+
+int function(LinkList &L)
+{
+    Node *p = L->next;  int len = 0;
+    while(p != NULL)
+    {
+        len++;
+        p = p->next;
+    }
+
+    int mid = len/2;
+    p = L;        //重置p
+
+    while(mid--)
+    {
+        p = p->next;
+    }//p指向中间偏左的节点
+
+    Node *cnt = p->next;
+
+    while(cnt != NULL)
+    {
+        t = cnt->next;
+        cnt->next = p;
+        p = cnt;
+        cnt = t;
+    }//p最后指向尾节点
+
+    int ans = 0;
+    Node *h = L->next;
+    // while(h->next != q)     //这里的判断条件有待商榷
+    // {
+    //     ans = max(ans , h->data + p->data);
+    //     h = h->next;
+    //     p = p->next;
+    // }
+
+    for(int i = 0 ; i < len/2 ; i++)
+    {
+        ans = max(ans , h->data+p->data);
+        h = h->next;
+        p = p->next;
+    }
+
+    return ans;
+}
+```
+
+## Day 16
+
+<image src='./image/16.jpg'>
+
+```c++
+typedef struct Node
+{
+    int data;
+    struct Node * next;
+} Node , *List;
+
+int function(List &L)
+{
+    Node *cnt = L->next , *pre = L;     //前后指针
+    while(p1->next != NULL)
+    {
+        if(cnt->data == cnt->next->data)
+        {
+            pre->next = cnt->next;
+            free(cnt);
+            cnt = pre->next;
+        }
+        else
+        {
+            pre = cnt;
+            cnt = cnt->next;
+        }
+    }
+    return L;
+}
+
+```
+
+
+## Day 17
+
+<image src="./image/17.jpg">
+
+
+```c++
+typedef struct Node
+{
+    int data;
+    struct Node * next;
+} Node , *List;
+
+Node* function(List &L)
+{
+    Node *cnt = L->next , *ans;
+    int flag = 0;   //标志为0，严格递增；标志为1，严格递减
+    while(cnt != NULL)
+    {  
+        if(flag == 0)
+        {
+            if(cnt->data < cnt->next->data)
+                cnt = cnt->next;
+            else if(cnt->data > cnt->next->data)
+            {
+                ans = cnt;
+                flag = 1;
+            }
+            else
+                //不是严格递增时
+                return NULL;
+        }
+        else if(flag == 1)
+        {
+            if(cnt->data > cnt->next->data)
+                cnt = cnt->next;
+            else
+                //不符合规定
+                return NULL;
+        }
+    }
+    return ans;
+}
+
+```
