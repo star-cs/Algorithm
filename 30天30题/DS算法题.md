@@ -751,3 +751,66 @@ Node* function(List &L)
 }
 
 ```
+
+## Day 18
+
+<image src="./image/18.jpg">
+
+> 思路：  
+> 1. 找到链表中最接近k或等于k的节点top
+> 2. 装置左半部分
+> 3. 双指针，从top节点开始，分别往左右依次比较遍历，二路归并
+
+```c++
+typedef struct Node
+{
+    int data;
+    struct Node * next;
+} Node , *List;
+
+List function(List &L , int k)
+{
+    Node * cnt = L->next->next;
+    Node * pre = L->next;
+
+    L->next = NULL;
+
+    while(cnt != NULL)
+    {
+        if(abs(cnt->data - k) < abs(pre->data - k))
+        {
+            Node * t = cnt->next;
+            cnt->next = pre;
+            pre = cnt;
+            cnt = t;
+            num = abs(cnt->data - k , num);
+        }
+        else
+        {
+            //此时pre指向最接近k的节点或等于k的节点
+            //cnt 为右半部分的指针
+            break;
+        }
+    }
+    if(pre->data == k)  pre = pre->next;
+    
+    Node *p = L;
+
+    while(k--)
+    {
+        int left = k - pre->data;
+        int right = cnt->data - k;
+        if(left < right)
+        {
+            p->next = pre;
+            pre = pre->next;
+        }
+        else
+        {
+            p->next = cnt;
+            cnt = cnt->next;
+        }
+    }
+    return L;
+}
+```
